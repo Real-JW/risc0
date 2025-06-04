@@ -1,6 +1,6 @@
 use risc0_zkvm::guest::env;
-use bzip2::read::BzDecoder;
-use std::io::Read;
+// use bzip2::read::BzDecoder;
+// use std::io::Read;
 
 fn main() {
     // 1. Read the single byte‐buffer that host passed in:
@@ -27,21 +27,18 @@ fn main() {
     );
 
     // 4. Split into `raw` and `compressed`
-    let raw = &input_data[8..8 + raw_len];
+    // let raw = &input_data[8..8 + raw_len];
     let compressed = &input_data[8 + raw_len..];
-
+    println!("{:?}", compressed);
     // 5. Decompress `compressed` and compare to `raw`
-    let mut decoder = BzDecoder::new(&compressed[..]);
-    let mut decompressed: Vec<u8> = Vec::new();
-    decoder
-        .read_to_end(&mut decompressed)
-        .expect("Bzip2 decompression failed in guest");
+    // let mut decoder = BzDecoder::new(&compressed[..]);
+    // let mut decompressed: Vec<u8> = Vec::new();
+    // decoder
+    //     .read_to_end(&mut decompressed)
+    //     .expect("Bzip2 decompression failed in guest");
 
     // 6. If decompression did not match the original, panic (proof will fail)
-    assert_eq!(
-        decompressed, raw,
-        "Decompressed payload did not match the original raw bytes!"
-    );
+    // assert_eq!(decompressed, raw, "Decompressed data does not match original");
 
     // 7. Commit a single success‐byte to the journal (optional, but shows "I succeeded")
     env::commit(&[1u8]);

@@ -7,8 +7,8 @@ use std::time::Instant;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // 1. Prepare the raw data (for example purposes, repeat a short message 100×)
-    let raw: Vec<u8> = b"hello speculative zk bzip!\n"
-        .repeat(100)
+    let raw: Vec<u8> = b"Hi there, this is Jiawen!\n"
+        .repeat(16384)
         .into();
 
     // 2. Compress `raw` with bzip2 on the host side
@@ -17,6 +17,8 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     encoder
         .read_to_end(&mut compressed)
         .expect("Host‐side bzip2 compression failed");
+
+    println!("Compressed {} → {} bytes", raw.len(), compressed.len());
 
     // 3. Build a single “to_guest” buffer = [ raw_len (8 bytes LE) ∥ raw ∥ compressed ]
     let raw_len = raw.len() as u64;
