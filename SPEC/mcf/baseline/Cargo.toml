@@ -1,0 +1,12 @@
+[package]
+name = "baseline"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "baseline"
+path = "src/lib.rs"
+
+[dependencies]
+mcmf = "2.0"
+rand = "0.9.1"

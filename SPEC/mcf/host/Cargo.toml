@@ -5,6 +5,9 @@ edition = "2021"
 
 [dependencies]
 methods = { path = "../methods" }
+baseline = { path = "../baseline" }
 risc0-zkvm = { version = "^2.0.2" }
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 serde = "1.0"
+mcmf = "2.0"
+rand = "0.9.1"

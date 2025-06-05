@@ -2,20 +2,15 @@
 use baseline::run_mcf;
 use methods::{MCMF_ELF, MCMF_ID};
 use risc0_zkvm::{default_prover, ExecutorEnv};
-use std::time::Instant;
 
 fn main() {
     // (A) Pick an “input” (for example, 10 or 25137 or whatever test‐case index you like).
-    // let input: u32 = 10;
-    let input: u32 = 16384;
+    let input: u32 = 10;
     // let input: u32 = 25137;
 
     // (B) Run the baseline MCF on the host, to compute (min_cost, paths).
     //     Here `run_mcf` returns (u32, Vec<Vec<u32>>).
-    let compute_start = Instant::now();
     let (min_cost_i32, paths_raw) = run_mcf(input as usize);
-    let compute_duration = compute_start.elapsed();
-    println!("Host MCF compute time: {:?}", compute_duration);
 
     // Convert min_cost to u32 and paths to Vec<Vec<u32>>
     let min_cost = min_cost_i32 as u32;
@@ -53,10 +48,7 @@ fn main() {
 
     // (D) Prove against your guest ELF:
     let prover = default_prover();
-    let start = Instant::now();
     let prove_info = prover.prove(env, MCMF_ELF).unwrap();
-    let duration = start.elapsed();
-    println!("Prover time: {:?}", duration);
     let receipt = prove_info.receipt;
 
     // (E) You can decode whatever the guest wrote to its journal (here: we expect it to write
@@ -64,8 +56,5 @@ fn main() {
     let _journaled_cost: u32 = receipt.journal.decode().unwrap();
 
     // (F) Finally, verify the receipt on‐chain (or locally).
-    let verify_start = Instant::now();  
     receipt.verify(MCMF_ID).unwrap();
-    let verify_duration = verify_start.elapsed();
-    println!("Verifier time: {:?}", verify_duration);
 }
