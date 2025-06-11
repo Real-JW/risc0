@@ -198,10 +198,6 @@ fn main() {
 
     println!("\n=== HMMER Results from zkVM ===");
     println!("Sequences processed: {}", hmmer_output.total_sequences);
-    println!(
-        "Guest processing time: {} ms",
-        hmmer_output.processing_time_ms
-    );
 
     // Calculate performance metrics
     let throughput = total_residues as f64 / (hmmer_output.processing_time_ms as f64 / 1000.0);
@@ -238,19 +234,18 @@ fn main() {
 
     // The receipt was verified at the end of proving, but the below code is an
     // example of how someone else could verify this receipt.
-    println!("\nVerifying receipt...");
+    // Add timer for verifier
+    // println!("\nVerifying receipt...");
+    let verify_start_time = Instant::now();
     receipt.verify(HMMER_ID).unwrap();
-    println!("Receipt verified successfully!");
+    let verify_time = verify_start_time.elapsed();
+    println!("Receipt verified successfully in {:?}!", verify_time);
 
     // Performance summary
     println!("\n=== Performance Summary ===");
     println!("Host sequence loading: {:?}", start_time.elapsed());
     println!("zkVM proof generation: {:?}", prove_time);
-    println!("Guest computation: {} ms", hmmer_output.processing_time_ms);
-    println!(
-        "Proof overhead: {:.1}x",
-        prove_time.as_millis() as f64 / hmmer_output.processing_time_ms as f64
-    );
+    println!("Receipt verified successfully in {:?}!", verify_time);
     println!("Total cycles: {}", prove_info.stats.total_cycles);
     println!(
         "Cycles per sequence: {}",
