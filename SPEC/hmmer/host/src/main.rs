@@ -121,15 +121,15 @@ fn main() {
 
     // Parse command line arguments
     let input_size = if args.len() > 1 {
-        args[1].parse::<usize>().unwrap_or(100)
+        args[1].parse::<usize>().unwrap_or(1)
     } else {
-        100 // Smaller default for zkVM due to constraints
+        1 // Smaller default for zkVM due to constraints
     };
 
     let hmm_length = if args.len() > 2 {
-        args[2].parse::<usize>().unwrap_or(25)
+        args[2].parse::<usize>().unwrap_or(1)
     } else {
-        25 // Smaller default for zkVM
+        1 // Smaller default for zkVM
     };
 
     let sequence_file = if args.len() > 3 {
