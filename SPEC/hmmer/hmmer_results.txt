@@ -1,7 +1,7 @@
 HMMER Search Results
 Input size: 1000 sequences
 HMM length: 50 states
-Search time: 352.688614ms
+Search time: 346.208034ms
 
 synthetic_seq_0	-161.77	1.80e70	0	50
 synthetic_seq_200	-161.77	1.80e70	0	50

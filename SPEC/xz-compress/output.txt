@@ -1,0 +1,51 @@
+[?2004h[01;32msethi5@seth-intel-i5[00m:[01;34m~/realjw/risc0/SPEC/xz-compress[00m$ [7mcargo run[27m
+[A[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Ccargo run
+[A
+[?2004l[1m[32m   Compiling[0m methods v0.1.0 (/home/sethi5/realjw/risc0/SPEC/xz-compress/methods)
+[1m[36m    Building[0m [=======================> ] 423/426: methods(build)                                           xz-compress: Starting build for riscv32im-risc0-zkvm-elf
+xz-compress:     Finished `release` profile [optimized] target(s) in 0.09s
+[1m[36m    Building[0m [=======================> ] 424/426: methods                                                  [K[1m[32m   Compiling[0m host v0.1.0 (/home/sethi5/realjw/risc0/SPEC/xz-compress/host)
+[1m[36m    Building[0m [=======================> ] 425/426: host(bin)                                                [K[0m[1m[38;5;9merror[0m[0m[1m: function `generate_text_data` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mhost/src/main.rs:155:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m155[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn generate_text_data(size: usize) -> Vec<u8> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mnote[0m[0m: `-D dead-code` implied by `-D warnings`[0m
+[0m    [0m[0m[1m[38;5;12m= [0m[0m[1mhelp[0m[0m: to override `-D warnings` add `#[allow(dead_code)]`[0m
+
+[1m[36m    Building[0m [=======================> ] 425/426: host(bin)                                                [K[0m[1m[38;5;9merror[0m[0m[1m: function `generate_binary_data` is never used[0m
+[0m   [0m[0m[1m[38;5;12m--> [0m[0mhost/src/main.rs:165:4[0m
+[0m    [0m[0m[1m[38;5;12m|[0m
+[0m[1m[38;5;12m165[0m[0m [0m[0m[1m[38;5;12m|[0m[0m [0m[0mfn generate_binary_data(size: usize) -> Vec<u8> {[0m
+[0m    [0m[0m[1m[38;5;12m|[0m[0m    [0m[0m[1m[38;5;9m^^^^^^^^^^^^^^^^^^^^[0m
+
+[1m[36m    Building[0m [=======================> ] 425/426: host(bin)                                                [K[1m[31merror[0m[1m:[0m could not compile `host` (bin "host") due to 2 previous errors
+[?2004h[01;32msethi5@seth-intel-i5[00m:[01;34m~/realjw/risc0/SPEC/xz-compress[00m$ cargo run
+[?2004l[1m[32m   Compiling[0m methods v0.1.0 (/home/sethi5/realjw/risc0/SPEC/xz-compress/methods)
+[1m[36m    Building[0m [=======================> ] 423/426: methods(build)                                           xz-compress: Starting build for riscv32im-risc0-zkvm-elf
+xz-compress:     Finished `release` profile [optimized] target(s) in 0.04s
+[1m[36m    Building[0m [=======================> ] 424/426: methods                                                  [K[1m[32m   Compiling[0m host v0.1.0 (/home/sethi5/realjw/risc0/SPEC/xz-compress/host)
+[1m[36m    Building[0m [=======================> ] 425/426: host(bin)                                                [K[1m[32m    Finished[0m ]8;;https://doc.rust-lang.org/cargo/reference/profiles.html#default-profiles\`dev` profile [optimized + debuginfo]]8;;\ target(s) in 2.10s
+[1m[32m     Running[0m `target/debug/host`
+XZ Compression Benchmark - RISC Zero vs Baseline
+================================================
+
+============================================================
+COMPRESSION LEVEL 1
+============================================================
+
+--- random_data (256 bytes, level 1) ---
+Baseline XZ:
+  Total time: 0.50 ms
+  Throughput: 0.49 MB/s
+  Compression ratio: 0.81x
+  Compressed size: 316 bytes
+
+thread 'main' panicked at host/src/main.rs:98:61:
+called `Result::unwrap()` on an `Err` value: rx len failed
+
+Caused by:
+    failed to fill whole buffer
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+[?2004h[01;32msethi5@seth-intel-i5[00m:[01;34m~/realjw/risc0/SPEC/xz-compress[00m$ 
