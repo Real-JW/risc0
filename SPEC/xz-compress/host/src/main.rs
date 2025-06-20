@@ -88,13 +88,14 @@ impl RiscZeroXZ {
         };
         
         // Prove phase
-        let prove_start = Instant::now();
+
         
         let env = ExecutorEnv::builder()
             .write(&input)?
             .build()?;
         
         let prover = default_prover();
+        let prove_start = Instant::now();
         let prove_info = prover.prove(env, XZ_COMPRESS_ELF).unwrap();
         let prove_time = prove_start.elapsed();
         let prove_time_ms = prove_time.as_secs_f64() * 1000.0;
@@ -152,34 +153,34 @@ const fn generate_crc32_table() -> [u32; 256] {
 }
 
 // Test data generators
-// fn generate_text_data(size: usize) -> Vec<u8> {
-//     let text = "The quick brown fox jumps over the lazy dog. This is sample text for compression testing. ";
-//     let mut data = Vec::new();
-//     while data.len() < size {
-//         data.extend_from_slice(text.as_bytes());
-//     }
-//     data.truncate(size);
-//     data
-// }
+fn generate_text_data(size: usize) -> Vec<u8> {
+    let text = "The quick brown fox jumps over the lazy dog. This is sample text for compression testing. ";
+    let mut data = Vec::new();
+    while data.len() < size {
+        data.extend_from_slice(text.as_bytes());
+    }
+    data.truncate(size);
+    data
+}
 
 // fn generate_binary_data(size: usize) -> Vec<u8> {
 //     (0..size).map(|i| (i % 256) as u8).collect()
 // }
 
-fn generate_random_data(size: usize) -> Vec<u8> {
-    use std::collections::hash_map::DefaultHasher;
-    use std::hash::{Hash, Hasher};
+// fn generate_random_data(size: usize) -> Vec<u8> {
+//     use std::collections::hash_map::DefaultHasher;
+//     use std::hash::{Hash, Hasher};
     
-    let mut data = Vec::with_capacity(size);
-    let mut hasher = DefaultHasher::new();
+//     let mut data = Vec::with_capacity(size);
+//     let mut hasher = DefaultHasher::new();
     
-    for i in 0..size {
-        i.hash(&mut hasher);
-        data.push((hasher.finish() % 256) as u8);
-    }
+//     for i in 0..size {
+//         i.hash(&mut hasher);
+//         data.push((hasher.finish() % 256) as u8);
+//     }
     
-    data
-}
+//     data
+// }
 
 fn run_benchmark(name: &str, data: &[u8], compression_level: u32) {
     println!("\n--- {} ({} bytes, level {}) ---", name, data.len(), compression_level);
@@ -219,23 +220,23 @@ fn main() {
     println!("================================================");
     
     let test_cases = vec![
-        ("random_data", generate_random_data(64)),        // 64B
-        ("random_data", generate_random_data(128)),        // 128B
-        ("random_data", generate_random_data(256)),        // 256B
-        ("random_data", generate_random_data(512)),        // 512B
-        ("random_data", generate_random_data(1024)),        // 1KB
-        ("random_data", generate_random_data(2048)),        // 2KB
-        ("random_data", generate_random_data(4096)),        // 4KB
-        ("random_data", generate_random_data(8192)),        // 8KB
-        ("random_data", generate_random_data(16384)),        // 16KB
-        ("random_data", generate_random_data(32768)),        // 32KB
-        ("random_data", generate_random_data(65536)),        // 64KB
-        ("random_data", generate_random_data(131072)),        // 128KB
-        ("random_data", generate_random_data(262144)),        // 256KB
-        ("random_data", generate_random_data(524288)),        // 512KB
-        ("random_data", generate_random_data(1048576)),        // 1MB
-        ("random_data", generate_random_data(2097152)),        // 2MB
-        ("random_data", generate_random_data(4194304)),        // 4MB
+        ("text_data", generate_text_data(64)),        // 64B
+        ("text_data", generate_text_data(128)),        // 128B
+        ("text_data", generate_text_data(256)),        // 256B
+        ("text_data", generate_text_data(512)),        // 512B
+        ("text_data", generate_text_data(1024)),        // 1KB
+        ("text_data", generate_text_data(2048)),        // 2KB
+        ("text_data", generate_text_data(4096)),        // 4KB
+        ("text_data", generate_text_data(8192)),        // 8KB
+        ("text_data", generate_text_data(16384)),        // 16KB
+        ("text_data", generate_text_data(32768)),        // 32KB
+        ("text_data", generate_text_data(65536)),        // 64KB
+        ("text_data", generate_text_data(131072)),        // 128KB
+        ("text_data", generate_text_data(262144)),        // 256KB
+        ("text_data", generate_text_data(524288)),        // 512KB
+        ("text_data", generate_text_data(1048576)),        // 1MB
+        ("text_data", generate_text_data(2097152)),        // 2MB
+        ("text_data", generate_text_data(4194304)),        // 4MB
     ];
     
     let compression_levels = vec![9];
